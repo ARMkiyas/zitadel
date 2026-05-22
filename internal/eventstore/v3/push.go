@@ -3,7 +3,6 @@ package eventstore
 import (
 	"context"
 	_ "embed"
-	"fmt"
 
 	"github.com/riverqueue/river"
 	"github.com/zitadel/logging"
@@ -137,7 +136,7 @@ func eventsToJobArgs(ctx context.Context, events []eventstore.Event) ([]river.Jo
 
 	jobArgs := make([]river.JobArgs, 0, len(events))
 	for _, event := range events {
-		targets, ok := router.GetEventBestMatch(fmt.Sprintf("event/%s", event.Type()))
+		targets, ok := router.GetEventBestMatch("event/" + string(event.Type()))
 		if !ok {
 			continue
 		}
